@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return "ese metodo se encarga de mostrar el formulario de crear";
+        return view('categories.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        return "se encarga de buscar los datos de un elemento y luego los coloca el un formulario para su posterio actualizacion";
+        return view('categories.edit');
     }
 
     /**
