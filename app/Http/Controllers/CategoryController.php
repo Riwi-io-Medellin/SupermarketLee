@@ -12,7 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        // Obtenemos todas las categorías
         $categories = Category::all();
+        // Pasamos las categorías a la vista 'categories.index'
         return view('categories.index', compact('categories'));
     }
 
@@ -21,6 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        // Retornamos la vista para crear una nueva categoría
         return view('categories.create');
     }
 
@@ -29,7 +32,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return "este metodo se encarga de guardar la informacion en la base de datos";
+        // Validamos los datos recibidos
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        // Creamos la nueva categoría
+        Category::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        // Redirigimos a la lista de categorías con un mensaje de éxito
+        return redirect()->route('categories.index')->with('success', 'Categoría creada con éxito.');
     }
 
     /**
@@ -37,7 +53,10 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        return "aca vamos a mostrar un elemento puntual de la base de datos";
+        // Obtenemos la categoría por ID
+        $category = Category::findOrFail($id);
+        // Mostramos la vista de detalles con la categoría específica
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -45,7 +64,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        return view('categories.edit');
+        // Obtenemos la categoría por ID
+        $category = Category::findOrFail($id);
+        // Retornamos la vista para editar la categoría
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -53,7 +75,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return "este metodo se encarga de actualizar los datos en la base de datos";
+        // Validamos los datos recibidos
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        // Obtenemos la categoría y actualizamos sus datos
+        $category = Category::findOrFail($id);
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        // Redirigimos a la lista de categorías con un mensaje de éxito
+        return redirect()->route('categories.index')->with('success', 'Categoría actualizada con éxito.');
     }
 
     /**
@@ -61,6 +97,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        return "este metodo se encarga de eliminar un elemento de la base de datos";
+        // Buscamos la categoría por ID y la eliminamos
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        // Redirigimos a la lista de categorías con un mensaje de éxito
+        return redirect()->route('categories.index')->with('success', 'Categoría eliminada con éxito.');
     }
 }
