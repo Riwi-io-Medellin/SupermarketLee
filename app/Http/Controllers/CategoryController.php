@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -30,21 +31,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        // Validamos los datos recibidos
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'nullable|string|max:600',
-        ]);
+        $validatedData = $request->validated();
 
-        // Creamos la nueva categoría
-        Category::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        Category::create($validatedData);
 
-        // Redirigimos a la lista de categorías con un mensaje de éxito
         return redirect()->route('categories.index')->with('success', 'Categoría creada con éxito.');
     }
 
@@ -73,23 +65,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        // Validamos los datos recibidos
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
+        $validatedData = $request->validated();
 
-        // Obtenemos la categoría y actualizamos sus datos
         $category = Category::findOrFail($id);
-        $category->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        $category->update($validatedData);
 
-        // Redirigimos a la lista de categorías con un mensaje de éxito
-        return redirect()->route('categories.index')->with('success', 'Categoría actualizada con éxito.');
+        return redirect()->route('categories.index')->with('success', 'Categoría actualizada exitosamente.');
     }
 
     /**
