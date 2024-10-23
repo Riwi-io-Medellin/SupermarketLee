@@ -34,8 +34,8 @@ class CategoryController extends Controller
     {
         // Validamos los datos recibidos
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:50',
+            'description' => 'nullable|string|max:600',
         ]);
 
         // Creamos la nueva categoría

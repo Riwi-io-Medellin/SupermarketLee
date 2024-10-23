@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container mx-auto py-8">
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 rounded mb-4 shadow">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Categorías</h1>
 
         <div class="flex justify-end mb-4">
