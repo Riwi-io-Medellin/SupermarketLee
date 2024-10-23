@@ -29,15 +29,23 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $category->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $category->description }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
+                                <!-- Enlace a la vista de detalles -->
+                                <a href="{{ route('categories.show', $category->id) }}"
+                                    class="text-blue-600 hover:text-blue-800">Detalles</a>
+
+                                <!-- Enlace para editar -->
                                 <a href="{{ route('categories.edit', $category->id) }}"
-                                    class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                    class="text-indigo-600 hover:text-indigo-800 ml-4">Editar</a>
+
+                                <!-- Formulario para eliminar -->
                                 <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
                                     class="inline-block ml-4">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
+                                    <button type="submit" class="text-red-600 hover:text-red-800">Eliminar</button>
                                 </form>
                             </td>
+
                         </tr>
                     @empty
                         <tr>
@@ -45,7 +53,6 @@
                                 categorías disponibles.</td>
                         </tr>
                     @endforelse
-
                 </tbody>
             </table>
         </div>
