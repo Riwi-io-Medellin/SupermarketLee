@@ -6,7 +6,7 @@
 
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="px-8 py-6">
-                
+
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold text-gray-700 mb-2">Nombre de la Categoría:</h2>
                     <p class="text-gray-600 text-lg">{{ $category->name }}</p>
@@ -27,7 +27,7 @@
 
                 <div class="mb-4">
                     <h3 class="text-xl font-bold text-gray-700 mb-2">Última actualización:</h3>
-                    <p class="text-gray-600 text-lg">{{ $category->updated_at->format('d-m-Y H:i:s') }}</p>
+                    <p class="text-gray-600 text-lg">{{ $category->updated_at->diffForHumans() }}</p>
                 </div>
 
 
