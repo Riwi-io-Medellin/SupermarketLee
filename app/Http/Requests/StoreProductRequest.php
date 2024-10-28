@@ -11,7 +11,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,24 @@ class StoreProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255|unique:products,name', // El nombre debe ser único en la tabla products
+            'description' => 'nullable|string', // Descripción opcional
+            'unit_value' => 'required|numeric', // Valor unitario obligatorio y numérico
+            'category_id' => 'nullable|exists:categories,id', // La categoría debe existir o ser null
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'The product name is required.',
+            'name.unique' => 'The product name must be unique.',
+            'unit_value.required' => 'The unit value is required.',
+            'unit_value.numeric' => 'The unit value must be a numeric value.',
+            'category_id.exists' => 'The selected category is invalid.',
         ];
     }
 }
