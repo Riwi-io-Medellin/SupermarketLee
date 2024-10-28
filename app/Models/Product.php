@@ -57,9 +57,19 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getFormattedUnitValueAttribute()
+    {
+        return number_format($this->unit_value, 2) . ' USD'; // Formateo de valor unitario con dos decimales
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value); // Guardar siempre el nombre en minúsculas
+    }
 }
