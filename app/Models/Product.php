@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use HasFactory;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -51,15 +54,30 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function scopeByCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
     |--------------------------------------------------------------------------
     */
 
+    public function getFormattedUnitValueAttribute()
+    {
+        return number_format($this->unit_value, 2) . ' USD'; // Formateo de valor unitario con dos decimales
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value); // Guardar siempre el nombre en minúsculas
+    }
 }
