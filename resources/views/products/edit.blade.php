@@ -2,41 +2,84 @@
 
 @section('content')
     <div class="container mx-auto py-8">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Detalles del Producto</h1>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Editar Producto</h1>
 
-        <div class="bg-white shadow-md rounded-lg overflow-hidden p-8">
-            <!-- Nombre del producto -->
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $product->name }}</h2>
+        <!-- Mostrar errores de validación si existen -->
+        @if ($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded mb-4">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
 
-            <!-- Descripción del producto -->
-            <div class="mb-4">
-                <strong class="block text-gray-700 mb-2">Descripción:</strong>
-                <p class="text-gray-600">{{ $product->description ?: 'No hay descripción disponible.' }}</p>
-            </div>
+        <!-- Formulario para editar producto -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <form action="{{ route('products.update', $product->id) }}" method="POST" class="px-8 py-8">
+                @csrf
+                @method('PUT')
 
-            <!-- Valor unitario -->
-            <div class="mb-4">
-                <strong class="block text-gray-700 mb-2">Valor Unitario:</strong>
-                <p class="text-gray-600">${{ $product->formatted_unit_value }}</p>
-            </div>
+                <!-- Nombre del producto -->
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Nombre del Producto:</label>
+                    <input type="text" name="name" id="name"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                           value="{{ old('name', $product->name) }}" required>
+                    @error('name')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <!-- Categoría -->
-            <div class="mb-4">
-                <strong class="block text-gray-700 mb-2">Categoría:</strong>
-                <p class="text-gray-600">{{ $product->category ? $product->category->name : 'Sin categoría asignada.' }}</p>
-            </div>
+                <!-- Descripción del producto -->
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-700 font-bold mb-2">Descripción:</label>
+                    <textarea name="description" id="description"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                              rows="4">{{ old('description', $product->description) }}</textarea>
+                    @error('description')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <!-- Botones de acción -->
-            <div class="flex justify-end mt-6">
-                <a href="{{ route('products.edit', $product->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mr-2">
-                    Editar Producto
-                </a>
-                <a href="{{ route('products.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                    Volver a Productos
-                </a>
-            </div>
+                <!-- Valor unitario -->
+                <div class="mb-4">
+                    <label for="unit_value" class="block text-gray-700 font-bold mb-2">Valor Unitario:</label>
+                    <input type="number" name="unit_value" id="unit_value" step="0.01"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                           value="{{ old('unit_value', $product->unit_value) }}" required>
+                    @error('unit_value')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Categoría del producto -->
+                <div class="mb-6">
+                    <label for="category_id" class="block text-gray-700 font-bold mb-2">Categoría:</label>
+                    <select name="category_id" id="category_id"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
+                        <option value="">Seleccionar Categoría</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex justify-end">
+                    <a href="{{ route('products.index') }}"
+                       class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mr-2">Cancelar</a>
+                    <button type="submit"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Actualizar Producto</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
+
