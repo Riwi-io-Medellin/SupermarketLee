@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="there is the descripcion" />
+    <meta name="description" content="there is the description" />
     <meta name="keywords" content="CRUD, Laravel, Modularization">
     <meta name="sitedomain" content="https://riwi.io">
     <meta name="organization" content="Riwi">
@@ -21,8 +21,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <!-- component -->
+<body class="flex flex-col min-h-screen">
+    <!-- Navbar -->
     <nav
         class="bg-white border border-gray-200 dark:border-gray-700 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow">
         <div class="container flex flex-wrap justify-between items-center mx-auto">
@@ -66,14 +66,14 @@
         </div>
     </nav>
 
-    <!-- component -->
-    <main class="mt-10">
+    <!-- Main content (flex-grow makes it take the available space) -->
+    <main class="flex-grow mt-10">
         <div class="container mx-auto px-4 sm:px-6">
             @yield('content')
         </div>
     </main>
 
-    <!-- component -->
+    <!-- Footer -->
     <footer class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 py-6 px-4">
         <div class="container mx-auto flex flex-wrap justify-between">
             <div class="flex items-center">
@@ -83,7 +83,6 @@
             </div>
         </div>
     </footer>
-</html>
 
 </body>
 
