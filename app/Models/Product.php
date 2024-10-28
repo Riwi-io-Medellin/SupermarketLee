@@ -51,6 +51,11 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function scopeByCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
