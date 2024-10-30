@@ -60,5 +60,43 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-4 flex justify-center">
+            <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center space-x-1">
+                {{-- Previous Page Link --}}
+                @if ($products->onFirstPage())
+                    <span class="px-4 py-2 bg-gray-200 text-gray-500 rounded-md">Anterior</span>
+                @else
+                    <a href="{{ $products->previousPageUrl() }}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Anterior</a>
+                @endif
+
+                {{-- Pagination Elements --}}
+                @foreach ($products->links()->elements as $element)
+                    {{-- "Three Dots" Separator --}}
+                    @if (is_string($element))
+                        <span class="px-4 py-2 bg-gray-200 text-gray-500 rounded-md">{{ $element }}</span>
+                    @endif
+
+                    {{-- Array Of Links --}}
+                    @if (is_array($element))
+                        @foreach ($element as $page => $url)
+                            @if ($page == $products->currentPage())
+                                <span class="px-4 py-2 bg-blue-500 text-white rounded-md">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}" class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white rounded-md">{{ $page }}</a>
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($products->hasMorePages())
+                    <a href="{{ $products->nextPageUrl() }}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Siguiente</a>
+                @else
+                    <span class="px-4 py-2 bg-gray-200 text-gray-500 rounded-md">Siguiente</span>
+                @endif
+            </nav>
+        </div>
+
     </div>
 </x-app-layout>
