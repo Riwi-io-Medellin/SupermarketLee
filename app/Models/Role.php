@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Role extends Model
 {
     use HasFactory;
 
@@ -15,15 +15,13 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
-    // protected $table = 'productos';
+    // protected $table = 'categories';
     // protected $primaryKey = 'id';
-    // public $timestamps = true;
+    // public $timestamps = false;
     // protected $guarded = [];
     protected $fillable = [
         'name',
         'description',
-        'unit_value',
-        'category_id'
         // Otros campos...
     ];
 
@@ -43,9 +41,9 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function category()
+    public function users()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(User::class);
     }
 
     /*
@@ -54,30 +52,15 @@ class Product extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function scopeByCategory($query, $categoryId)
-    {
-        return $query->where('category_id', $categoryId);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
     |--------------------------------------------------------------------------
     */
 
-    public function getFormattedUnitValueAttribute()
-    {
-        return number_format($this->unit_value, 2) . ' USD'; // Formateo de valor unitario con dos decimales
-    }
-
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtolower($value); // Guardar siempre el nombre en minúsculas
-    }
 }

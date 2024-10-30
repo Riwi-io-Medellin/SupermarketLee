@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('category')->paginate(10); // Traer productos con sus categorías pero paginados
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -21,7 +23,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all(); // Para el dropdown de categorías
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -29,7 +32,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        Product::create($request->validated()); // Usar los datos validados por StoreProductRequest
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -37,7 +42,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -45,7 +50,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -53,7 +59,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->validated()); // Usar los datos validados por UpdateProductRequest
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -61,6 +69,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    // Listar productos por categoría
+    public function productsByCategory($categoryId)
+    {
+        $products = Product::byCategory($categoryId)->get();
+        return view('products.index', compact('products'));
     }
 }
