@@ -12,6 +12,8 @@
             </div>
         @endif
 
+        <button onclick="alertSuccess()">hola</button>
+
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Categorías</h1>
 
         <div class="flex justify-end mb-4">

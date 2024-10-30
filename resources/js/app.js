@@ -1,15 +1,20 @@
 import './bootstrap';
-
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
-
 Alpine.start();
 
+function imprimirTexto(mensaje) {
+   alert(mensaje);
+}
 
-const menuToggle = document.getElementById('menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
+window.imprimirTexto = imprimirTexto;
 
-menuToggle.addEventListener('click', function () {
-    mobileMenu.classList.toggle('hidden');
-});
+
+
+// const menuToggle = document.getElementById('menu-toggle');
+// const mobileMenu = document.getElementById('mobile-menu');
+
+// menuToggle.addEventListener('click', function () {
+//     mobileMenu.classList.toggle('hidden');
+// });
