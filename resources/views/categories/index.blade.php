@@ -6,6 +6,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="bg-red-500 text-white p-4 rounded mb-4 shadow">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Categorías</h1>
 
         <div class="flex justify-end mb-4">
@@ -17,12 +23,15 @@
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-300">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nombre
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Descripción</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Acciones
                         </th>
                     </tr>
                 </thead>
