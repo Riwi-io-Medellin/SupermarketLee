@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -23,6 +24,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        // Verifica si el usuario está autenticado y es administrador
+        if (!Auth::check() || Auth::user()->role_id != 1) { // 1 corresponde al rol de 'admin'
+            return redirect()->route('categories.index')->with('error', 'No tienes permiso para acceder a esta sección.');
+        }
         // Retornamos la vista para crear una nueva categoría
         return view('categories.create');
     }
@@ -55,6 +60,11 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
+        // Verifica si el usuario está autenticado y es administrador
+        if (!Auth::check() || Auth::user()->role_id != 1) { // 1 corresponde al rol de 'admin'
+            return redirect()->route('categories.index')->with('error', 'No tienes permiso para acceder a esta sección.');
+        }
+
         // Obtenemos la categoría por ID
         $category = Category::findOrFail($id);
         // Retornamos la vista para editar la categoría
@@ -79,6 +89,10 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        // Verifica si el usuario está autenticado y es administrador
+        if (!Auth::check() || Auth::user()->role_id != 1) { // 1 corresponde al rol de 'admin'
+            return redirect()->route('categories.index')->with('error', 'No tienes permiso para acceder a esta sección.');
+        }
         // Buscamos la categoría por ID y la eliminamos
         $category = Category::findOrFail($id);
         $category->delete();
