@@ -1,10 +1,14 @@
-@extends('layouts.personal')
-
-@section('content')
+<x-app-layout>
     <div class="container mx-auto py-8">
         @if (session('success'))
             <div class="bg-green-500 text-white p-4 rounded mb-4 shadow">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-500 text-white p-4 rounded mb-4 shadow">
+                {{ session('error') }}
             </div>
         @endif
 
@@ -17,14 +21,17 @@
 
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full table-auto">
-                <thead class="bg-gray-100">
+                <thead class="bg-gray-300">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nombre
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Descripción</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -63,4 +70,4 @@
             </table>
         </div>
     </div>
-@endsection
+</x-app-layout>

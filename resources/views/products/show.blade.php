@@ -1,6 +1,4 @@
-@extends('layouts.personal')
-
-@section('content')
+<x-app-layout>
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Detalles del Producto</h1>
 
@@ -50,4 +48,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>
